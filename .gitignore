@@ -1,0 +1,44 @@
+﻿# Sistema
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Entornos y dependencias
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datos: se ignora el contenido pero se conserva la estructura
+02_datos/**
+!02_datos/**/
+!02_datos/**/.gitkeep
+
+# Power BI: se versiona el diseño, no los datos
+05_powerbi/datos/**
+!05_powerbi/datos/.gitkeep
+
+# Resultados y entregables
+06_resultados/**
+!06_resultados/**/
+!06_resultados/**/.gitkeep
+
+# Formatos de datos sueltos
+*.pkl
+*.pickle
+*.csv
+*.xlsx
+*.parquet
+*.feather
+*.db
+*.sqlite
+*.duckdb
+
+# Logs e IDE
+*.log
+.vscode/
+.idea/
