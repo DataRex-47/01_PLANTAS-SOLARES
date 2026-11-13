@@ -19,18 +19,18 @@ Business Analytics (Discovery). Pipeline de agentes: B_01_DisenoProyecto, B_02_M
 
 ## ESTADO ACTUAL DEL PROYECTO
 
-**Fase actual**: Integración ejecutada; pendientes la suma de control de la unión y la comprobación de unicidad del grano diario
+**Fase actual**: Análisis cerrado; el siguiente paso es Insights
 **Objetivo de negocio**: detectar dónde pierden las dos plantas y decidir si hace falta desplazar a un equipo de ingenieros
 **Unidad de análisis**: inversor y ventana de 15 minutos en generación, planta y ventana de 15 minutos en sensores
 **Palancas elegidas**: irradiación, estado de los paneles, eficiencia de los inversores, medidores y sensores
-**Documentos vivos**: 06_resultados/Calidad_Datos/informe_calidad_datos.md · 06_resultados/Integracion/informe_integracion.md
+**Documentos vivos**: 06_resultados/Calidad_Datos/informe_calidad_datos.md · 06_resultados/Integracion/informe_integracion.md · 06_resultados/Analisis/informe_analisis.md · 06_resultados/Analisis/hallazgos.md
 **Fuentes limpias**: 02_datos/02_Analitico/Planta1_Generacion.pickle · 02_datos/02_Analitico/Planta2_Generacion.pickle · 02_datos/02_Analitico/Planta1_Sensores.pickle · 02_datos/02_Analitico/Planta2_Sensores.pickle
-**Dataframe actual**: 02_datos/02_Analitico/tablon_analitico.pickle · 02_datos/02_Analitico/tablon_analitico_diario
+**Dataframe actual**: 02_datos/02_Analitico/tablon_analitico.pkl · 02_datos/02_Analitico/tablon_analitico_diario.pkl
 **Estructura del dataframe**: salida capturada de `df.info()`
 
 ```text
 <class 'pandas.DataFrame'>
-DatetimeIndex: 8140 entries, 2020-05-15 to 2020-12-06
+DatetimeIndex: 8140 entries, 2020-05-15 to 2020-06-17
 Data columns (total 24 columns):
  #   Column                       Non-Null Count  Dtype
 ---  ------                       --------------  -----
@@ -61,5 +61,5 @@ Data columns (total 24 columns):
 dtypes: float64(22), str(2)
 memory usage: 1.6 MB
 ```
-**Preguntas**: 0 respondidas · 6 pendientes (P0.1 a P0.6 propuestas en el informe, pendientes de aprobación)
-**Insights validados**: 0
+**Preguntas**: 7 respondidas · 4 pendientes (P1 a P4 en el informe de análisis)
+**Insights validados**: 2 ⭐ (comportamiento distinto entre inversores y existencia de parones)
