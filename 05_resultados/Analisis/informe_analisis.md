@@ -31,6 +31,27 @@ Los puntos que se separan de la nube no siguen la irradiación. Esa forma, con s
 
 ## 4. Parones por inversor
 
+### Cómo se cuenta un inversor caído
+
+Esta es la lógica que hay que recordar, en cinco pasos:
+
+| Paso | Qué se hace | Para qué sirve |
+|---|---|---|
+| 1 | Para cada planta y cada tramo de 15 minutos se calcula la mediana de la potencia AC de sus 22 inversores | tener la referencia de lo que produce la planta en ese instante |
+| 2 | Si esa mediana es mayor que 0, la planta está produciendo | descartar la noche y el amanecer, cuando todos están en 0 y no hay avería |
+| 3 | Un inversor está caído si su potencia AC es 0 y la mediana de su planta es mayor que 0 | detectar al que se queda parado mientras sus vecinos producen |
+| 4 | Se suman los tramos caídos por planta y por día | tener cuántos tramos de 15 minutos falló cada día |
+| 5 | Los tramos se multiplican por 0,25 (o se dividen entre 4) | pasar a inversor-horas |
+
+Ejemplo: a las 12:15 la mediana de Planta 2 es 9 kW y un inversor marca 0 kW. Hay sol, sus vecinos producen y él no, así que ese tramo cuenta como caído. A las 2:00 de la madrugada la mediana es 0 y todos marcan 0: no hay sol, ese tramo no cuenta.
+
+Por qué la condición es "mayor que 0" y no "mayor o igual a 0": con "mayor o igual" todas las noches contarían como caídas y las horas saldrían infladas, sobre todo para elegir qué inversores visitar.
+
+Por qué se compara con la mediana de su planta en el mismo instante y no con otra hora: a las 9 de la mañana y a la 1 de la tarde no se espera la misma potencia. La mediana del mismo instante ya trae el sol, las nubes y la hora del día, y deja ver al equipo que se sale de lo normal.
+
+El total de 859 inversor-horas de Planta 2 suma los 34 días. La tabla de abajo solo muestra los cinco días peores de cada planta.
+
+
 Para no depender de la impresión visual se contó, en cada jornada, cuántos tramos de 15 minutos tiene un inversor en cero mientras el resto de su planta está produciendo. La suma se pasa a horas. La noche queda fuera por construcción, porque solo se miran los tramos en que el parque genera. Los equipos sin registros tampoco suman horas.
 
 Cinco días con más inversor-horas caídas por planta:
@@ -64,6 +85,20 @@ Cinco inversores con más energía perdida por planta:
 | Planta 1 | McdE0feGgRqW7Ca | 1 | 0,75 | 882,2 |
 
 La energía perdida se estima con la mediana de los inversores vecinos en ese mismo instante, así que es un orden de magnitud y no una medida exacta.
+
+Los cinco inversores se ordenan por energía perdida, no por horas. Por horas paradas, el sexto en energía (81aHJ1q11NBPMrL) suma 60 horas y superaría a q49J (54,25), que es el quinto.
+
+### Los cuatro inversores sin registro
+
+| Dato | Valor |
+|---|---|
+| Inversores | IQ2d7wF4YD8zU1Q, xMbIugepa2P7lBB, NgDl19wMapZy17u y mqwcsP2rE7J0TFp, todos de Planta 2 |
+| Tramos sin lectura por inversor | 904 de 3.259, el 28 % |
+| Periodo | del 19 de mayo por la noche al 29 de mayo por la tarde, con 8 días completos del 21 al 28 |
+| Tramos sin lectura con sol | 459 por inversor |
+| Energía que habrían producido, valorada con la mediana de sus vecinos | 74.351 kWh por inversor y 297.403 kWh los cuatro |
+
+Esas horas no cuentan como caídas, porque sin lectura no se sabe si el equipo estaba parado o solo desconectado. Si estuvieran parados, la pérdida subiría unos 297 MWh sobre los 785 MWh actuales, casi un 38 % más. Es una cota superior y no una medida. Los 22 y 23 de mayo, dos de los cinco peores días de Planta 2, caen dentro de este periodo.
 
 ## 5. Cómo se clasifica cada lectura
 
@@ -100,7 +135,7 @@ Planta 2 pierde entre cinco y seis veces más inversor-horas que Planta 1 en sus
 
 El 7 de junio se revisó hora por hora. Entre las 10 y las 14, Planta 2 tuvo entre 6 y 10 de sus 22 inversores en cero la hora completa, mientras Planta 1 no pasó de un equipo en un solo tramo. El parón es de Planta 2 y no de las dos plantas, y el patrón apunta a un grupo de equipos que se detiene junto.
 
-Cinco equipos de Planta 2 suman entre 62 y 74 horas paradas en 34 días, con 28 a 48 caídas cada uno. En Planta 1 el peor equipo llega a 5,75 horas. La diferencia es de orden.
+Cinco equipos de Planta 2 suman entre 54,25 y 74 horas paradas en 34 días, con 28 a 48 caídas cada uno. En Planta 1 el peor equipo llega a 5,75 horas. La diferencia es de orden.
 
 ## 8. Preguntas abiertas
 
@@ -108,7 +143,7 @@ Cinco equipos de Planta 2 suman entre 62 y 74 horas paradas en 34 días, con 28 
 |---|---|---|
 | P1 | ¿Los cinco inversores de Planta 2 comparten alimentación o comunicaciones? | 28 a 48 caídas por equipo en 34 días |
 | P2 | ¿Por qué entre las 10 y las 14 del 7 de junio se detuvieron entre 6 y 10 inversores de Planta 2? | revisión hora por hora del día |
-| P3 | ¿Qué cuatro inversores de Planta 2 no reportan el 21, 22, 26, 27 y 28 de mayo? | 18 de 22 inversores en esos cinco días |
+| P3 | ¿Por qué cuatro inversores de Planta 2 no reportan del 19 al 29 de mayo? ¿Estaban parados o solo sin conexión? | 904 tramos sin lectura en cada uno, el 28 % de sus registros, con 8 días completos (del 21 al 28) en que solo reportan 18 de 22 |
 
 
 Ninguna se responde en este informe. Quedan anotadas para la revisión con el equipo de operación.

@@ -32,6 +32,7 @@ __pycache__/
 *.pickle
 *.csv
 *.xlsx
+!05_resultados/Business_Case/*.xlsx
 *.parquet
 *.feather
 *.db

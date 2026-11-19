@@ -12,4 +12,4 @@ Una fila por pregunta respondida. La columna ⭐ marca la que rompe la hipótesi
 | 3.3 | ¿Es constante el comportamiento en todos los inversores? | no: cinco equipos de Planta 2 suman entre 54,25 y 74 horas caídas frente a 5,75 del peor de Planta 1 | todos los inversores se comportaban igual | sí | noche excluida, equipos sin registro no suman | heatmap_dias.png |
 | 3.4 | ¿Ha habido momentos de fallo? | sí, 11 días entre el 15 de mayo y el 14 de junio, con el 7 de junio como peor día en las dos plantas | los fallos eran eventos aislados | sí | media horaria complementada con revisión manual del 20 de mayo | heatmap_inversores.png |
 
-Los gráficos viven en `06_resultados/Analisis/graficos/`. El detalle de cada cifra está en `informe_analisis.md`.
+Los gráficos viven en `05_resultados/Analisis/graficos/`. El detalle de cada cifra está en `informe_analisis.md`.

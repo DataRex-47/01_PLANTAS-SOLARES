@@ -97,7 +97,7 @@ Queda pendiente de comprobar, y no se ha usado todavía, el duplicado por clave 
 | Id | Pregunta | Dato que la enciende | Hipótesis | Prioridad |
 |---|---|---|---|---|
 | P0.1 | ¿Por qué planta 1 pierde tramos en 10 días y llega a 65 de 96 ventanas el 21 de mayo? | 106 ventanas sin dato y todos los inversores afectados por igual | fallo de captura o de guardado, no de un equipo | Alta |
-| P0.2 | ¿Por qué cuatro inversores de planta 2 traen unas 3.074 filas frente a 3.259 del resto? | conteo de registros por inversor | comunicaciones intermitentes de esos equipos | Alta |
+| P0.2 | ¿Por qué cuatro inversores de planta 2 traen 2.355 filas frente a 3.259 del resto? | conteo de registros por inversor: les faltan 904 tramos seguidos, del 19 al 29 de mayo | comunicaciones caídas de esos equipos, o equipos parados sin registro | Alta |
 | P0.3 | ¿Por qué el contador diario de energía no vuelve a cero a medianoche? | 161 y 516 arranques de día con valor distinto de cero | desfase del contador, el día cierra a la 01:15 | Media |
 | P0.4 | ¿La irradiación está en kW/m² o en Wh/m²? | media 0,23 y máximo 1,22 | la columna trae irradiancia instantánea y el diccionario dice energía | Alta |
 | P0.5 | ¿Hay inversores o días por debajo del 93 % de eficiencia? | media de 97,8 % en las dos plantas frente al umbral de negocio del 93 % | pérdida sostenida en algunos equipos | Alta |

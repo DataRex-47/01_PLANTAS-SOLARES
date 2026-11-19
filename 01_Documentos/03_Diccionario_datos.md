@@ -85,4 +85,31 @@ La frecuencia de muestreo es de **15 minutos**.
 - Las variables de **potencia** son instantáneas en ese *timestamp*.
 - Las de **energía** e **irradiación** corresponden a un acumulado hasta ese punto (o dentro del intervalo, según el caso).
 
+---
+
+## NOTAS DEL PROYECTO
+
+### Irradiación: qué unidad se usa
+
+**Aplica a:** `irradiacion_wh_m2`.
+
+**Detalle:** el diccionario original declara Wh/m² por tramo de 15 minutos. Los valores observados, con media de 0,23 y máximo de 1,22, no pueden ser Wh/m² de un tramo de 15 minutos, porque el sol pleno aporta unos 250 Wh/m² en ese tiempo. Cuadran con **kW/m² instantáneos**, donde 1,0 es sol pleno. Con esa lectura la irradiación diaria suma unos 5,5 kWh/m², coherente con mayo y junio. En el proyecto se trata como kW/m² y queda marcado como supuesto. Si se sumara la columna tal como está, el resultado quedaría unas 250 veces corto.
+
+### Unidades de energía
+
+| Unidad | Qué es | Equivalencia |
+|---|---|---|
+| kW | potencia, lo que produce un equipo en un instante | |
+| kWh | energía, potencia por tiempo | 1 kW durante 1 hora |
+| MWh | mil kWh, la unidad en que se reporta la energía de una planta | 1 MWh = 1.000 kWh |
+
+### Términos del análisis
+
+| Término | Qué es |
+|---|---|
+| Tramo | una lectura cada 15 minutos |
+| Inversor caído | en un tramo, marca 0 kW de AC mientras la mediana de su planta, en ese mismo instante, es mayor que 0 |
+| Inversor hora | cuatro tramos caídos, es decir, un inversor parado durante una hora |
+| Energía perdida | lo que habría producido un inversor caído, estimado con la mediana de sus vecinos en ese instante, por 0,25 horas por tramo |
+| Energía recuperable | la parte de la energía perdida que se vuelve a producir al reparar los equipos; es un supuesto, no un dato |
 

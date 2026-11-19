@@ -10,7 +10,7 @@ El notebook no registra las filas ni la suma de la métrica clave antes y despu�
 
 Se resumieron las variables por `id_planta`, `id_inversor` y día. Se calcularon mínimo, media y máximo para temperaturas, potencias, eficiencia y energía diaria; para irradiación también se calculó la suma. Los nombres de columnas se aplanaron.
 
-La salida de `df.info()` muestra 8.140 filas y 24 columnas, con índice diario entre el 15 de mayo y el 6 de diciembre de 2020. Las estadísticas de generación tienen 1.464 valores no nulos y las de sensores 1.222. `irradiacion_wh_m2_sum` aparece con 8.140 valores no nulos. Como `resample('D')` genera días sin lecturas y la suma puede devolver cero en esos grupos, esos valores no deben interpretarse automáticamente como irradiación observada.
+El resumen diario por planta, inversor y día tiene 1.496 filas: 44 inversores por 34 días, del 15 de mayo al 17 de junio de 2020. Los días sin lectura de un inversor quedan con valores vacíos. Las sumas de irradiación de esos días no deben leerse como irradiación observada.
 
 ## 3. Resultado y pendientes
 
