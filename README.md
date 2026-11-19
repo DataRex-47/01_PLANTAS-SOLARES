@@ -1,14 +1,26 @@
 # Plantas solares: dónde se pierde la energía
 
+## De qué trata este proyecto
+
+Este es un caso de análisis de datos sobre dos plantas solares. Cada una tiene 22 inversores, que son los equipos que convierten la corriente de los paneles en la que usa la red, y un sensor meteorológico. La dirección de operaciones sabía que se estaba perdiendo energía, pero no sabía en qué planta ni en qué equipos.
+
+Para responderlo se trabajó con dos tipos de datos de 34 días, del 15 de mayo al 17 de junio de 2020, en lecturas cada 15 minutos. Por un lado, la generación de cada inversor (136.476 filas). Por otro, las temperaturas y la irradiación que registra el sensor de cada planta (6.441 filas).
+
+El trabajo siguió las fases de un proyecto de analítica. Se revisó la calidad de los datos, se unieron las fuentes, se analizó dónde y cuándo se pierde energía, se convirtió lo encontrado en insights con su decisión y se armó un business case con cifras ilustrativas. Al final hay una pieza para dirección, una guía para operación y una página para quien solo tenga un minuto.
+
+Si tienes poco tiempo, lee la respuesta en tres números. Si quieres entender cómo se llega a ella, sigue con la lógica del inversor caído y con las fases del proyecto.
+
+## En una frase
+
 Dos plantas solares con los mismos 22 inversores cada una. Una pierde el 0,3 % de su energía por equipos parados. La otra, el **16 %**.
 
 ![El 7 de junio, cuadro por cuadro](05_resultados/Exhibits/EX4_7_junio_animado.gif)
 
-Cada cuadrado es un inversor. Rojo: en cero con el resto de su planta produciendo. A mediodía, hasta 10 de 22 en Planta 2.
+Cada cuadrado es un inversor y el rojo marca uno en cero mientras el resto de su planta produce. A mediodía llegan a ser hasta 10 de 22 en Planta 2.
 
 ## La pregunta
 
-La dirección de operaciones sabía que había pérdidas, pero no dónde. Con datos de generación y de sensores de 34 días (del 15 de mayo al 17 de junio de 2020), en tramos de 15 minutos: ¿hace falta enviar ingenieros a las plantas, y a cuál?
+Con los datos de generación y de sensores de esos 34 días, en tramos de 15 minutos, ¿hace falta enviar ingenieros a las plantas, y a cuál?
 
 ## La respuesta en tres números
 
@@ -18,7 +30,7 @@ La dirección de operaciones sabía que había pérdidas, pero no dónde. Con da
 | **30 de 34** | días con más de 2 inversor-horas caídas en Planta 2. En Planta 1, 2 |
 | **95 %** | de los tramos en cero de Planta 2 cae entre las 9 y las 15 horas |
 
-**Decisión:** enviar el equipo a Planta 2, empezar por los cinco inversores con más energía perdida (entre 54 y 74 horas paradas cada uno, frente a 5,75 del peor de Planta 1) y pedir los registros de eventos entre las 9 y las 15 horas. Los diez primeros concentran el 67 % de las horas caídas.
+**Decisión.** Enviar el equipo a Planta 2, empezar por los cinco inversores con más energía perdida (entre 54 y 74 horas paradas cada uno, frente a 5,75 del peor de Planta 1) y pedir los registros de eventos entre las 9 y las 15 horas. Los diez primeros concentran el 67 % de las horas caídas.
 
 ![Inversor-horas caídas por día](05_resultados/Exhibits/EX1_inversor_horas_por_dia.png)
 
@@ -36,15 +48,15 @@ La idea es comparar a cada inversor con su propia planta en el mismo instante.
 | 2 | Si esa mediana es mayor que 0, hay sol y la planta produce | descartar la noche, cuando todos marcan 0 y no hay avería |
 | 3 | Un inversor está caído si marca 0 kW mientras la mediana es mayor que 0 | encontrar al que se queda parado mientras sus vecinos producen |
 | 4 | Se suman los tramos caídos por planta y por día | saber cuánto falló cada día |
-| 5 | Cada tramo dura 15 minutos: se multiplica por 0,25 | pasar a inversor-horas |
+| 5 | Cada tramo dura 15 minutos, así que se multiplica por 0,25 | pasar a inversor-horas |
 
-Ejemplo: a las 12:15 la mediana de Planta 2 es 9 kW y un inversor marca 0 kW. Hay sol, sus vecinos producen y él no: ese tramo cuenta como caído. A las 2 de la madrugada la mediana es 0 y todos marcan 0: no hay sol, no cuenta.
+Por ejemplo, a las 12:15 la mediana de Planta 2 es 9 kW y un inversor marca 0 kW. Hay sol, sus vecinos producen y él no, así que ese tramo cuenta como caído. A las 2 de la madrugada la mediana es 0 y todos marcan 0, porque no hay sol, y no cuenta.
 
-Si la regla fuera "mediana mayor o igual a 0", cada noche contaría como caída y las horas saldrían infladas. Y se compara con el mismo instante y no con otra hora porque a las 9 de la mañana y a la 1 de la tarde no se espera la misma potencia: la mediana del mismo instante ya trae el sol y las nubes.
+Si la regla fuera "mediana mayor o igual a 0", cada noche contaría como caída y las horas saldrían infladas. Además se compara con el mismo instante y no con otra hora, porque a las 9 de la mañana y a la 1 de la tarde no se espera la misma potencia. La mediana del mismo instante ya trae el sol y las nubes.
 
 ## Qué vale la decisión
 
-Con cifras ilustrativas en pesos colombianos y el escenario más prudente (se recupera la mitad de lo perdido y la energía se valora a 220 pesos por kWh), enviar el equipo recupera unos 392 MWh en 34 días, que valen unos 86 millones de pesos. La visita se estima en 85 millones, así que se paga en cerca de un mes. El detalle y los otros dos escenarios están en el [business case](05_resultados/Business_Case/business_case.md) y en su [hoja de cálculo](05_resultados/Business_Case/Business_Case_Planta2.xlsx). Los datos no traen tarifa ni costos: de ellos sale solo la energía perdida.
+Con cifras ilustrativas en pesos colombianos y el escenario más prudente (se recupera la mitad de lo perdido y la energía se valora a 220 pesos por kWh), enviar el equipo recupera unos 392 MWh en 34 días, que valen unos 86 millones de pesos. La visita se estima en 85 millones, así que se paga en cerca de un mes. El detalle y los otros dos escenarios están en el [business case](05_resultados/Business_Case/business_case.md) y en su [hoja de cálculo](05_resultados/Business_Case/Business_Case_Planta2.xlsx). Los datos no traen tarifa ni costos, así que de ellos sale solo la energía perdida.
 
 ## Para leer los datos
 
